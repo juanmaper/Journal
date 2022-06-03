@@ -25,7 +25,7 @@
     <textarea placeholder="What happened today?"></textarea>
   </div>
 
-  <Fab />
+  <Fab icon="fa-save" />
 
   <img src="https://www.collinsdictionary.com/images/full/flower_101359432.jpg" 
        alt="Entry picture"
