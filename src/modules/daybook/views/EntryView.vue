@@ -62,7 +62,7 @@ export default {
     loadEntry() {
       const entry = this.getEntryById( this.id )
 
-      if ( !entry ) this.$router.push({ name: 'no-entry' })
+      if ( !entry ) return this.$router.push({ name: 'no-entry' })
 
       this.entry = entry
     }
@@ -86,6 +86,12 @@ export default {
 
   created() {
     this.loadEntry()
+  },
+
+  watch: {
+    id() {
+      this.loadEntry()
+    }
   }
 }
 </script>
