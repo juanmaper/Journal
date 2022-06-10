@@ -11,7 +11,7 @@ import { defineAsyncComponent } from 'vue/'
 
 export default {
   components: {
-    Fab: defineAsyncComponent( () =>import('../components/Fab.vue') )
+    Fab: defineAsyncComponent( () => import('../components/Fab.vue') )
   }
 }
 </script>
