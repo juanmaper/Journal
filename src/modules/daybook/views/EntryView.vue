@@ -28,7 +28,7 @@
     </textarea>
   </div>
 
-  <Fab icon="fa-save" />
+  <Fab icon="fa-save" @on:click="saveEntry" />
 
   <img src="https://www.collinsdictionary.com/images/full/flower_101359432.jpg" 
        alt="Entry picture"
@@ -65,6 +65,9 @@ export default {
       if ( !entry ) return this.$router.push({ name: 'no-entry' })
 
       this.entry = entry
+    },
+    async saveEntry() {
+      console.log("Guardando entry");
     }
   },
 
