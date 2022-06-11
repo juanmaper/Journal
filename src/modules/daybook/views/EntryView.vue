@@ -59,7 +59,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('journal', ['updateEntry']),
+    ...mapActions('journal', ['updateEntry', 'createEntry']),
     loadEntry() {
       let entry 
 
@@ -69,8 +69,8 @@ export default {
           date: new Date().getTime()
         }
       } else {
-        entry = this.getEntryById( this.id )
-        if ( !entry ) return this.$router.push({ name: 'no-entry' })  
+          entry = this.getEntryById( this.id )
+          if ( !entry ) return this.$router.push({ name: 'no-entry' })  
       }
 
       this.entry = entry
@@ -82,6 +82,8 @@ export default {
         await this.updateEntry(this.entry)
       } else {
         //Create entry
+        const newEntryId = await this.createEntry( this.entry )
+        this.$router.push({ name: 'entry', params: { id: newEntryId } })
       }
 
     },

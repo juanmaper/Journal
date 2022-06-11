@@ -18,7 +18,7 @@
 </template>
 
 <style lang="scss" scoped>
-a{
+a {
   cursor: pointer;
 }
 </style>
