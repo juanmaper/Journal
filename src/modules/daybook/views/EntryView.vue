@@ -37,7 +37,7 @@
 
 <script>
 import { defineAsyncComponent } from '@vue/runtime-core'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import getDayMonthYear from "../helpers/getDayMonthYear"
 
 export default {
@@ -59,6 +59,7 @@ export default {
   },
 
   methods: {
+    ...mapActions('journal', ['updateEntry']),
     loadEntry() {
       const entry = this.getEntryById( this.id )
 
@@ -67,8 +68,8 @@ export default {
       this.entry = entry
     },
     async saveEntry() {
-      console.log("Guardando entry");
-    }
+      this.updateEntry(this.entry)
+    },
   },
 
   computed: {
