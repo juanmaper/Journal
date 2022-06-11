@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar bg-primary">
-    <a class="navbar-brand text-white">
+    <a class="navbar-brand text-white" @click="$router.push({ name: 'no-entry'})">
       <img src="@/assets/logo.png" 
            alt="Vue logo"
            height="24"
@@ -16,3 +16,9 @@
     </div>
   </nav>
 </template>
+
+<style lang="scss" scoped>
+a{
+  cursor: pointer;
+}
+</style>
