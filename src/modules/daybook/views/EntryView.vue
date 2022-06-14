@@ -39,6 +39,12 @@
 
   <Fab icon="fa-save" @on:click="saveEntry" />
 
+  <img 
+      v-if="entry.picture && !localImage"
+      :src="entry.picture" 
+      alt="entry-picture"
+      class="img-thumbnail">
+
   <img v-if="localImage"
        :src="localImage" 
        alt="Entry picture"
@@ -50,7 +56,8 @@ import { defineAsyncComponent } from '@vue/runtime-core'
 import { mapActions, mapGetters } from 'vuex'
 import Swal from 'sweetalert2'
 
-import getDayMonthYear from "../helpers/getDayMonthYear"
+import getDayMonthYear from '../helpers/getDayMonthYear'
+import uploadImage from '../helpers/uploadImage'
 
 export default {
   props: {
@@ -75,6 +82,9 @@ export default {
   methods: {
     ...mapActions('journal', ['updateEntry', 'createEntry', 'deleteEntry']),
     loadEntry() {
+      this.localImage = null
+      this.file = null
+
       let entry 
 
       if ( this.id === 'new') {
@@ -98,6 +108,10 @@ export default {
 
       Swal.showLoading()
 
+      const picture = await uploadImage( this.file )
+
+      this.entry.picture = picture
+
       if ( this.entry.id ) {
         // Update entry
         await this.updateEntry(this.entry)
@@ -107,7 +121,9 @@ export default {
         this.$router.push({ name: 'entry', params: { id: newEntryId } })
       }
 
+      this.file = null
       Swal.fire('Saved', 'Entry registered successfully', 'success')
+      
     },
     async onDeleteEntry() {
 
@@ -147,10 +163,6 @@ export default {
       const fr = new FileReader()
       fr.onload = () => this.localImage = fr.result
       fr.readAsDataURL( file )
-
-      console.log(this.localImage);
-      console.log('-----------------------');
-      console.log(this.file);
     },
 
     onSelectImage() {
