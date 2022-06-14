@@ -8,6 +8,12 @@
     </div>
 
     <div>
+      <input type="file" 
+            @change="onSelectedImage"
+            ref="imageSelector"
+            v-show="false"
+            accept="image/png, image/jpeg" >
+
       <button 
         v-if="entry.id"
         class="btn btn-danger mx-2"
@@ -16,7 +22,7 @@
         <i class="fa fa-trash-alt"></i>
       </button>
 
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" @click="onSelectImage">
         Upload photo
         <i class="fa fa-upload"></i>
       </button>
@@ -33,7 +39,8 @@
 
   <Fab icon="fa-save" @on:click="saveEntry" />
 
-  <img src="https://www.collinsdictionary.com/images/full/flower_101359432.jpg" 
+  <img v-if="localImage"
+       :src="localImage" 
        alt="Entry picture"
        class="img-thumbnail">
 </template>
@@ -55,7 +62,9 @@ export default {
 
   data() {
     return {
-      entry: null
+      entry: null,
+      localImage: null,
+      file: null
     }
   },
 
@@ -122,6 +131,30 @@ export default {
       this.$router.push({ name: 'no-entry'})
 
       Swal.fire('Deleted', '', 'success')
+    },
+
+    onSelectedImage( event ) {
+      const file = event.target.files[0]
+
+      if ( !file ) {
+        this.localImage = null
+        this.file = null
+        return
+      }
+
+      this.file = file
+
+      const fr = new FileReader()
+      fr.onload = () => this.localImage = fr.result
+      fr.readAsDataURL( file )
+
+      console.log(this.localImage);
+      console.log('-----------------------');
+      console.log(this.file);
+    },
+
+    onSelectImage() {
+      this.$refs.imageSelector.click()
     }
   },
 
