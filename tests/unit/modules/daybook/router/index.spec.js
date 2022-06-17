@@ -32,4 +32,16 @@ describe('Daybook router module tests', () => {
 
   })
 
+  test('should return the route id', () => {
+    
+    const route = {
+      params: {
+        id: 'ABC-123'
+      }
+    }
+
+    const entryRoute = daybookRouter.children.find( route => route.name === 'entry' )
+    expect( entryRoute.props( route ) ).toEqual({ id: 'ABC-123' })
+  })
+
 })
