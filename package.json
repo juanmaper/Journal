@@ -33,6 +33,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "jest": "^27.0.5",
     "sass": "^1.52.1",
-    "sass-loader": "10"
+    "sass-loader": "10",
+    "setimmediate": "^1.0.5"
   }
 }

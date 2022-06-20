@@ -1,9 +1,18 @@
-import uploadImage from "@/modules/daybook/helpers/uploadImage"
+import 'setimmediate'
+import cloudinary from "cloudinary"
 import axios from "axios"
+
+import uploadImage from "@/modules/daybook/helpers/uploadImage"
+
+cloudinary.config({
+  cloud_name: 'ds3yf4btu',
+  api_key: '625791121868461',
+  api_secret: '1QOFT2hMFQFyxfYSnLj50bxOkm0'
+})
 
 describe('uploadImage tests', () => {
   
-  test('should load a file and return the url', async() => {
+  test('should load a file and return the url', async( done ) => {
     
     /*
       In general, API calls should not be used in tests. It would be better to simulate them using a mock, as they slow down
@@ -19,6 +28,15 @@ describe('uploadImage tests', () => {
     const url = await uploadImage( file )
 
     expect( typeof url ).toBe('string')
+
+    // Take the ID to delete the pic in cloudinary
+    const segments = url.split('/')
+    const imageId = segments[ segments.length - 1 ].replace('.jpg', '')
+    
+    cloudinary.v2.api.delete_resources( imageId, {}, () => {
+      done()
+    })
+
   })
 
 })
