@@ -38,4 +38,25 @@ const createVuexStore = ( initialState ) =>
       expect( store.state.journal.isLoading ).toBeFalsy()
     })
 
+    test('mutation: updateEntry', () => {
+
+      const store = createVuexStore( journalState )
+
+      const updatedEntry = {
+        id: '-N4Wv4XVronCdn1koj1B',
+        date: 1655205284034,
+        picture: "https://res.cloudinary.com/ds3yf4btu/image/upload/v1655216917/iczhdkowquouhqjer3zp.png",
+        text: "Hello world from tests"
+      }
+
+      store.commit('journal/updateEntry', updatedEntry)
+
+      const storeEntries = store.state.journal.entries
+
+      expect( storeEntries.length ).toBe(2)
+
+      expect( storeEntries.find( e => e.id === updatedEntry.id ))
+        .toEqual( updatedEntry )
+    })
+
   })
