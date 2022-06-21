@@ -59,4 +59,22 @@ const createVuexStore = ( initialState ) =>
         .toEqual( updatedEntry )
     })
 
+    test('mutation: addEntry and deleteEntry', () => {
+      const store = createVuexStore( journalState )
+
+      const newEntry = {
+        id: 'ABC-123',
+        text: 'Hello World'
+      }
+
+      store.commit('journal/addEntry', newEntry)
+      expect( store.state.journal.entries.length ).toBe(3)
+      expect( store.state.journal.entries.includes( newEntry ) ).toBeTruthy()
+
+      store.commit('journal/deleteEntry', newEntry.id)
+      expect( store.state.journal.entries.length ).toBe(2)
+      expect( store.state.journal.entries.includes( newEntry ) ).toBeFalsy()
+
+    })
+
   })
