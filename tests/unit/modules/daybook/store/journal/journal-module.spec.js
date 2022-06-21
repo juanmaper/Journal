@@ -7,14 +7,14 @@ const createVuexStore = ( initialState ) =>
     modules: {
       journal: {
         ...journal,
-        state: { ...initialState }
+        state: structuredClone( initialState )
       }
     }
   })
 
   describe('Vuex - Journal Module tests', () => {
     
-    // Basic test
+    // Basic test ====================
     test('should have this initial state', () => {
       
       const store = createVuexStore( journalState )
@@ -24,7 +24,7 @@ const createVuexStore = ( initialState ) =>
       expect( entries ).toEqual( journalState.entries )
     })
 
-    // Mutations
+    // Mutations ====================
     test('mutation: setEntries', () => {
       
       const store = createVuexStore({ isLoading: true, entries: [] })
@@ -59,7 +59,7 @@ const createVuexStore = ( initialState ) =>
         .toEqual( updatedEntry )
     })
 
-    test('mutation: addEntry and deleteEntry', () => {
+    test('mutation: addEntry deleteEntry', () => {
       const store = createVuexStore( journalState )
 
       const newEntry = {
@@ -76,5 +76,24 @@ const createVuexStore = ( initialState ) =>
       expect( store.state.journal.entries.includes( newEntry ) ).toBeFalsy()
 
     })
+
+    // Getters ====================
+    test('getters: getEntriesByTerm getEntryById', () => {
+
+      const store = createVuexStore( journalState )
+
+      expect( store.getters['journal/getEntriesByTerm']('').length).toBe(2)
+      expect( store.getters['journal/getEntriesByTerm']('fantasy').length).toBe(1)
+
+      const [ entry1, entry2 ] = journalState.entries
+
+      expect( store.getters['journal/getEntriesByTerm']('fantasy')).toEqual([ entry2 ])
+
+
+      expect( store.getters['journal/getEntryById']( entry1.id ) ).toEqual( entry1 )
+
+    })
+
+    //Actions ====================
 
   })
