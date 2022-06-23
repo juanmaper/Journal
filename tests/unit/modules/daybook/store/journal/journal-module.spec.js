@@ -98,6 +98,7 @@ const createVuexStore = ( initialState ) =>
     /*
     Note: A new instance of Firebase should be set up in order to use other data in the tests, 
       setting a different URL in the journalApi file depending on the environment node var.
+      Another option is to mock the API calls
     */
     test('actions: loadEntries', async() => {
       
@@ -129,6 +130,30 @@ const createVuexStore = ( initialState ) =>
           date: 1655216679166,
           text: "This is a fantasy dwarf!!",
         })
+    })
+
+    test('actions: createEntry deleteEntry', async() => {
+      
+      const store = createVuexStore( journalState )
+
+      const newEntry = {
+        date: 1655205284034,
+        text: 'New entry'
+      }
+
+      const newId = await store.dispatch('journal/createEntry', newEntry)
+
+      expect( typeof newId ).toBe('string')
+      expect(
+        store.state.journal.entries.some( e => e.id === newId )
+      ).toBeTruthy()
+
+      await store.dispatch('journal/deleteEntry', newId)
+
+      expect(
+        store.state.journal.entries.some( e => e.id === newId )
+      ).toBeFalsy()
+
     })
 
   })
