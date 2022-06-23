@@ -95,6 +95,10 @@ const createVuexStore = ( initialState ) =>
     })
 
     //Actions ====================
+    /*
+    Note: A new instance of Firebase should be set up in order to use other data in the tests, 
+      setting a different URL in the journalApi file depending on the environment node var.
+    */
     test('actions: loadEntries', async() => {
       
       const store = createVuexStore({ isLoading: true, entries: [] })
@@ -102,6 +106,29 @@ const createVuexStore = ( initialState ) =>
       await store.dispatch('journal/loadEntries')
 
       expect ( store.state.journal.entries.length ).toBe(5)
+    })
+
+    test('actions: updateEntry', async() => {
+      
+      const store = createVuexStore( journalState )
+
+      const updatedEntry = {
+        id: '-N4XaZjH6XW5fyXHwYy5',
+        date: 1655216679166,
+        text: "This is a fantasy dwarf!!",
+        anotherField: true
+      }
+
+      await store.dispatch('journal/updateEntry', updatedEntry)
+
+      expect ( store.state.journal.entries.length ).toBe(2)
+      expect( 
+        store.state.journal.entries.find( e => e.id === updatedEntry.id )
+      ).toEqual({
+          id: '-N4XaZjH6XW5fyXHwYy5',
+          date: 1655216679166,
+          text: "This is a fantasy dwarf!!",
+        })
     })
 
   })
