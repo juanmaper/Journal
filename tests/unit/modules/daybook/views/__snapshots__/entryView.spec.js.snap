@@ -2,7 +2,7 @@
 
 exports[`EntryView tests should show the entry correctly 1`] = `
 <div class="entry-title d-flex justify-content-between p-2">
-  <div><span class="text-success fs-3 fw-bold">14</span><span class="mx-1 fs-3">Junio</span><span class="mx-2 fs-4 fw-light">2022, Martes</span></div>
+  <div><span class="text-success fs-3 fw-bold">14</span><span class="mx-1 fs-3">June</span><span class="mx-2 fs-4 fw-light">2022, Tuesday</span></div>
   <div><input type="file" accept="image/png, image/jpeg" style="display: none;"><button class="btn btn-danger mx-2"> Delete <i class="fa fa-trash-alt"></i></button><button class="btn btn-primary"> Upload photo <i class="fa fa-upload"></i></button></div>
 </div>
 <hr>

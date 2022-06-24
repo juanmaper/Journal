@@ -1,5 +1,6 @@
-const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-const days   = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado']
+const months = ['January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 
+  'November', 'December']
+const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
 const getDayMonthYear = ( dateString ) => {
 

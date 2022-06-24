@@ -104,7 +104,7 @@ export default {
     },
     async saveEntry() {
 
-      new Swal({
+      Swal.fire({
         title: 'Saving...',
         allowOutsideClick: false
       })
@@ -139,7 +139,7 @@ export default {
 
       if ( !isConfirmed ) return
 
-      new Swal({
+      Swal.fire({
         title: 'Deleting...',
         allowOutsideClick: false
       })

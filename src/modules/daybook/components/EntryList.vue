@@ -3,7 +3,7 @@
     <div class="px-2 pt-2">
       <input type="text"
              class="form-control"
-             placeholder="Buscar entrada"
+             placeholder="Search entry"
              v-model="term" 
       />
     </div>
