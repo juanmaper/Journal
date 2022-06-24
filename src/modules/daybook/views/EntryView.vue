@@ -1,54 +1,56 @@
 <template>
-  <div class="entry-title d-flex justify-content-between p-2">
+  <template v-if="entry">
+    <div class="entry-title d-flex justify-content-between p-2">
+      <div>
+        <span class="text-success fs-3 fw-bold">{{ day }}</span>
+        <span class="mx-1 fs-3">{{ month }}</span>
+        <span class="mx-2 fs-4 fw-light">{{ yearDay }}</span>
+      </div>
 
-    <div>
-      <span class="text-success fs-3 fw-bold">{{ day }}</span>
-      <span class="mx-1 fs-3">{{ month }}</span>
-      <span class="mx-2 fs-4 fw-light">{{ yearDay }}</span>
+      <div>
+        <input type="file" 
+              @change="onSelectedImage"
+              ref="imageSelector"
+              v-show="false"
+              accept="image/png, image/jpeg" >
+
+        <button 
+          v-if="entry.id"
+          class="btn btn-danger mx-2"
+          @click="onDeleteEntry">
+            Delete
+          <i class="fa fa-trash-alt"></i>
+        </button>
+
+        <button class="btn btn-primary" @click="onSelectImage">
+          Upload photo
+          <i class="fa fa-upload"></i>
+        </button>
+      </div>
     </div>
 
-    <div>
-      <input type="file" 
-            @change="onSelectedImage"
-            ref="imageSelector"
-            v-show="false"
-            accept="image/png, image/jpeg" >
-
-      <button 
-        v-if="entry.id"
-        class="btn btn-danger mx-2"
-        @click="onDeleteEntry">
-          Delete
-        <i class="fa fa-trash-alt"></i>
-      </button>
-
-      <button class="btn btn-primary" @click="onSelectImage">
-        Upload photo
-        <i class="fa fa-upload"></i>
-      </button>
+    <hr>
+    <div class="d-flex flex-column px-3 h-75">
+      <textarea 
+        v-model="entry.text"
+        placeholder="What happened today?">
+      </textarea>
     </div>
-  </div>
 
-  <hr>
-  <div class="d-flex flex-column px-3 h-75">
-    <textarea 
-      v-model="entry.text"
-      placeholder="What happened today?">
-    </textarea>
-  </div>
+    <img 
+        v-if="entry.picture && !localImage"
+        :src="entry.picture" 
+        alt="entry-picture"
+        class="img-thumbnail">
+
+    <img v-if="localImage"
+        :src="localImage" 
+        alt="Entry picture"
+        class="img-thumbnail">
+  </template>
 
   <Fab icon="fa-save" @on:click="saveEntry" />
-
-  <img 
-      v-if="entry.picture && !localImage"
-      :src="entry.picture" 
-      alt="entry-picture"
-      class="img-thumbnail">
-
-  <img v-if="localImage"
-       :src="localImage" 
-       alt="Entry picture"
-       class="img-thumbnail">
+  
 </template>
 
 <script>
