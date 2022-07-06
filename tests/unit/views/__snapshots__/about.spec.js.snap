@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`About Page tests should match the snapshot 1`] = `
-<div class="about">
-  <h1>This is an about page</h1>
-</div>
-`;
-
 exports[`About View tests should match the snapshot 1`] = `
 <div class="about">
   <h1>This is an about page</h1>
