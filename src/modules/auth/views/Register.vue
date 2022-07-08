@@ -54,8 +54,6 @@ export default {
 
       onSubmit: async() => {
         const { ok, message } = await createUser( userForm.value )
-
-        console.log(ok, message);
       }
     }
   }
