@@ -71,6 +71,8 @@ export const checkAuthStatus = async({ commit }) => {
 
     commit('loginUser', { user, idToken, refreshToken })
 
+    return { ok: true }
+
   } catch (error) {
     commit('logout')
     return { ok: false, message: error.response.data.error.message }
