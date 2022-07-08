@@ -48,3 +48,32 @@ export const signInUser = async({ commit }, user ) => {
   }
 
 }
+
+export const checkAuthStatus = async({ commit }) => {
+
+  const idToken = localStorage.getItem('idToken')
+  const refreshToken = localStorage.getItem('refreshToken')
+
+  if ( !idToken ) {
+    commit('logout')
+    return { ok: false, message: 'No token provided' }
+  }
+
+  try {
+    
+    const { data } = await authApi.post(':lookup', { idToken })
+    const { displayName: username, email } = data.users[0]
+
+    const user = {
+      username,
+      email
+    }
+
+    commit('loginUser', { user, idToken, refreshToken })
+
+  } catch (error) {
+    commit('logout')
+    return { ok: false, message: error.response.data.error.message }
+  }
+
+}
