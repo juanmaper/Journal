@@ -88,4 +88,25 @@ describe('Vuex: auth module tests', () => {
 
   })
 
+  // Actions
+  test('Actions: createUser - User already exists error', () => {
+    
+    const store = createVuexStore({
+      status: 'not-authenticated', // 'authenticated','not-authenticated', 'authenticating'
+      user: null,
+      idToken: null,
+      refreshToken: null
+    })
+
+    const newUser = { username: 'Test User', email: 'test@test.com', password: '123456' }
+
+    const { status, user, idToken, refreshToken } = store.state.auth
+
+    expect( status ).toBe( 'not-authenticated' )
+    expect( user ).toBeNull()
+    expect( idToken ).toBeNull()
+    expect( refreshToken ).toBeNull()
+
+  })
+
 })
