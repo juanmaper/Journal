@@ -47,4 +47,30 @@ describe('Vuex: auth module tests', () => {
 
   })
 
+  test('Mutation: logout ', () => {
+    
+    const store = createVuexStore({
+      status: 'authenticated', // 'authenticated','not-authenticated', 'authenticating'
+      user: { name: 'user1', email: 'example@example.com' },
+      idToken: '123456',
+      refreshToken: 'refresh'
+    })
+
+    localStorage.setItem('idToken', 'localStorageToken' )
+    localStorage.setItem('refreshToken', 'localStorageRefreshToken' )
+
+    store.commit('auth/logout')
+
+    const { status, user, idToken, refreshToken } = store.state.auth
+
+    expect( status ).toBe( 'not-authenticated' )
+    expect( user ).toBeNull()
+    expect( idToken ).toBeNull()
+    expect( refreshToken ).toBeNull()
+    
+    expect( localStorage.getItem( 'idToken' ) ).toBeNull()
+    expect( localStorage.getItem( 'refreshToken' ) ).toBeNull()
+
+  })
+
 })
