@@ -31,7 +31,7 @@ describe('Vuex: auth module tests', () => {
     })
 
     const payload = {
-        user: { name: 'User', email: 'user@gmail.com' },
+        user: { username: 'User', email: 'user@gmail.com' },
         idToken: 'ABC-123',
         refreshToken: 'XYZ-123'
     }
@@ -41,7 +41,7 @@ describe('Vuex: auth module tests', () => {
     const { status, user, idToken, refreshToken } = store.state.auth
     
     expect( status ).toBe( 'authenticated' )
-    expect( user ).toEqual( { name: 'User', email: 'user@gmail.com' } )
+    expect( user ).toEqual( { username: 'User', email: 'user@gmail.com' } )
     expect( idToken ).toBe( 'ABC-123' )
     expect( refreshToken ).toBe( 'XYZ-123' )
 
@@ -51,7 +51,7 @@ describe('Vuex: auth module tests', () => {
     
     const store = createVuexStore({
       status: 'authenticated', // 'authenticated','not-authenticated', 'authenticating'
-      user: { name: 'user1', email: 'example@example.com' },
+      user: { username: 'user1', email: 'example@example.com' },
       idToken: '123456',
       refreshToken: 'refresh'
     })
@@ -67,9 +67,24 @@ describe('Vuex: auth module tests', () => {
     expect( user ).toBeNull()
     expect( idToken ).toBeNull()
     expect( refreshToken ).toBeNull()
-    
+
     expect( localStorage.getItem( 'idToken' ) ).toBeNull()
     expect( localStorage.getItem( 'refreshToken' ) ).toBeNull()
+
+  })
+
+  // Getters
+  test('Getter: username currentState', () => {
+        
+    const store = createVuexStore({
+        status: 'authenticated', // 'authenticated','not-authenticated', 'authenticating'
+        user: { username: 'testUser', email: 'test@gmail.com' },
+        idToken: 'ABC-123',
+        refreshToken: 'XYZ-456'
+    })
+
+    expect( store.getters['auth/currentStatus'] ).toBe('authenticated')
+    expect( store.getters['auth/username'] ).toBe('testUser')
 
   })
 
