@@ -7,14 +7,14 @@ const journalApi = axios.create({
 // This could be done in the above part I think, but the using of interceptor to show it is interesting. 
 // Anyway, everything is commented as firebase does not get configured properly in terms of rules and auth
 
-// journalApi.interceptors.request.use( ( config ) => {
+journalApi.interceptors.request.use( ( config ) => {
 
-//   config.params = {
-//     auth: localStorage.getItem('idToken')
-//   }
+  config.params = {
+    auth: localStorage.getItem('idToken')
+  }
 
-//   return config
+  return config
 
-// })
+})
 
 export default journalApi

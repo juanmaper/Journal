@@ -19,7 +19,8 @@ const uploadImage = async ( file ) => {
 
   } catch (error) {
     console.error('Image loading error, check logs')
-    console.log(error);
+    console.log(error)
+    return null
   }
 
 }
