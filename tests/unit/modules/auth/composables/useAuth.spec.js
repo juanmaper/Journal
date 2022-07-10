@@ -53,12 +53,12 @@ describe('useAuth tests', () => {
     test('successful login', async() => {
         
         const { loginUser } = useAuth()
-        const loginForm = { email: 'test@test.com', password: '123456' }
+        const newUser = { email: 'test@test.com', password: '123456' }
         mockStore.dispatch.mockReturnValue({ ok: true })
 
-        const resp = await loginUser( loginForm )
+        const resp = await loginUser( newUser )
 
-        expect(mockStore.dispatch).toHaveBeenCalledWith('auth/signInUser', loginForm)
+        expect(mockStore.dispatch).toHaveBeenCalledWith('auth/signInUser', newUser)
         expect( resp ).toEqual({ ok: true })
 
     })
@@ -66,15 +66,29 @@ describe('useAuth tests', () => {
     test('failed login', async() => {
         
         const { loginUser } = useAuth()
-        const loginForm = { email: 'test@test.com', password: '123456' }
-        mockStore.dispatch.mockReturnValue({ ok: false, message: 'EMAIL/PASSWORD do not exist' })
+        const newUser = { email: 'test@test.com', password: '123456' }
+        mockStore.dispatch.mockReturnValue({ ok: false, message: 'EMAIL/PASSWORD does not exist' })
 
-        const resp = await loginUser( loginForm )
+        const resp = await loginUser( newUser )
 
-        expect(mockStore.dispatch).toHaveBeenCalledWith('auth/signInUser', loginForm)
-        expect( resp ).toEqual({ ok: false, message: 'EMAIL/PASSWORD do not exist' })
+        expect(mockStore.dispatch).toHaveBeenCalledWith('auth/signInUser', newUser)
+        expect( resp ).toEqual({ ok: false, message: 'EMAIL/PASSWORD does not exist' })
 
     })
+
+    test('checkAuthStatus', async() => {
+        
+        const { checkAuthStatus } = useAuth()
+
+        mockStore.dispatch.mockReturnValue({ ok: true })
+
+        const resp = await checkAuthStatus()
+        
+        expect( mockStore.dispatch ).toHaveBeenCalledWith('auth/checkAuthStatus')
+        expect( resp ).toEqual({ ok: true })
+
+    })
+
 
     
     
