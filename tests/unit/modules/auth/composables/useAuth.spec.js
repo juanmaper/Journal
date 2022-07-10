@@ -90,6 +90,17 @@ describe('useAuth tests', () => {
     })
 
 
+    test('logout ', () => {
+        
+        const { logout } = useAuth()
+
+        logout()
+
+        expect( mockStore.commit ).toHaveBeenCalledWith('auth/logout')
+        expect( mockStore.commit ).toHaveBeenCalledWith('journal/clearEntries')
+
+    })
+    
     
     
     
