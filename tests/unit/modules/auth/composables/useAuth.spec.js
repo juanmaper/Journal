@@ -50,6 +50,32 @@ describe('useAuth tests', () => {
     })
 
 
+    test('successful login', async() => {
+        
+        const { loginUser } = useAuth()
+        const loginForm = { email: 'test@test.com', password: '123456' }
+        mockStore.dispatch.mockReturnValue({ ok: true })
+
+        const resp = await loginUser( loginForm )
+
+        expect(mockStore.dispatch).toHaveBeenCalledWith('auth/signInUser', loginForm)
+        expect( resp ).toEqual({ ok: true })
+
+    })
+
+    test('failed login', async() => {
+        
+        const { loginUser } = useAuth()
+        const loginForm = { email: 'test@test.com', password: '123456' }
+        mockStore.dispatch.mockReturnValue({ ok: false, message: 'EMAIL/PASSWORD do not exist' })
+
+        const resp = await loginUser( loginForm )
+
+        expect(mockStore.dispatch).toHaveBeenCalledWith('auth/signInUser', loginForm)
+        expect( resp ).toEqual({ ok: false, message: 'EMAIL/PASSWORD do not exist' })
+
+    })
+
     
     
     
