@@ -101,7 +101,14 @@ describe('useAuth tests', () => {
 
     })
     
-    
+    test('Computed: authState, username', () => {
+        
+        const { authStatus, username } = useAuth()
+
+        expect(authStatus.value).toBe('authenticated')
+        expect(username.value ).toBe('Juanma')
+
+    })
     
     
 
