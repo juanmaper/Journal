@@ -8,6 +8,7 @@ import authApi from "@/api/authApi"
 export const createUser = async({ commit }, user ) => {
 
   const { username, email, password } = user
+  console.log(password);
 
   try {
     

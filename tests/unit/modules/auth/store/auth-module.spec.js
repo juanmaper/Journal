@@ -1,4 +1,5 @@
 
+import axios from 'axios'
 import createVuexStore from '../../../mocks-data/mock-store'
 
 describe('Vuex: auth module tests', () => {
@@ -107,6 +108,39 @@ describe('Vuex: auth module tests', () => {
     expect( idToken ).toBeNull()
     expect( refreshToken ).toBeNull()
 
+  })
+
+  test('Actions: createUser signInUser - Create user', async() => {
+
+    const store = createVuexStore({
+        status: 'not-authenticated', // 'authenticated','not-authenticated', 'authenticating'
+        user: null,
+        idToken: null,
+        refreshToken: null
+    })
+
+    const newUser = { username: 'TestingUser', email: 'testing@test.com', password: '123456' }
+    // SignIn
+    const a = await store.dispatch('auth/signInUser', { ...newUser } )
+    const { idToken } = store.state.auth
+
+
+    // Remove user
+    const deleteResp = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:delete?key=AIzaSyBZn-GbY2C1JH1CR2l0nYT9ntJETetaeG4`, {
+        idToken
+    })
+
+    // Create user
+    const resp = await store.dispatch('auth/createUser', newUser )
+
+    expect(resp).toEqual({ ok: true })
+
+    const { status, user, idToken:token, refreshToken } = store.state.auth
+    
+    expect( status ).toBe( 'authenticated' )
+    expect( user ).toMatchObject({ username: 'TestingUser', email: 'testing@test.com' })
+    expect( typeof token ).toBe('string')
+    expect( typeof refreshToken ).toBe('string')
   })
 
 })
