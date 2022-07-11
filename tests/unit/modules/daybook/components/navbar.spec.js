@@ -56,7 +56,6 @@ describe('Navbar component tests', () => {
           idToken: null,
           refreshToken: null
       })
-
   })
     
     
